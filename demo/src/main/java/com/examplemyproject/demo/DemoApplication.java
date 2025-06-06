@@ -18,18 +18,9 @@ public class DemoApplication {
 	@Bean
     public CommandLineRunner loadData(VideoRepository repository) {
         return args -> {
-            repository.save(new Video(null, 
-                                     "Intro to Spring Boot",
-                                      "Basics of Spring Boot",
-                                       "http://example.com/1", 
-                                       LocalDate.now(),
-                                        Arrays.asList("Spring", "Java")));
-            repository.save(new Video(null, 
-                                      "JPA Crash Course",
-                                       "Quick intro to JPA",
-                                        "http://example.com/2", 
-                                        LocalDate.now(), 
-                                        Arrays.asList("JPA", "Database")));
+            repository.save(new Video(null, "Intro to Spring Boot", "Basics of Spring Boot", "http://example.com/1", LocalDate.now(), Arrays.asList("Spring", "Java")));
+            repository.save(new Video(null, "JPA Crash Course", "Quick intro to JPA", "http://example.com/2", LocalDate.now(), Arrays.asList("JPA", "Database")));
+            repository.save(new Video(null, "Spring Boot Testing", "Video on unit testing in Spring Boot", "http://example.com/3", LocalDate.of(2025, 6, 5), Arrays.asList("Spring", "Testing")));
         };
     }
 

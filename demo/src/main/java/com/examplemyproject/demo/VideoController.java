@@ -1,6 +1,7 @@
- package com.examplemyproject.demo;
+package com.examplemyproject.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,15 +11,37 @@ import java.util.List;
 public class VideoController {
 
     @Autowired
-    private VideoRepository videoRepository;
+    private VideoService videoService;
 
     @GetMapping
     public List<Video> getAllVideos() {
-        return (List<Video>) videoRepository.findAll();
+        return videoService.getAllVideos();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Video> getVideoById(@PathVariable Long id) {
+        try {
+            Video video = videoService.getVideoById(id);
+            return ResponseEntity.ok(video);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    //  Add this method to handle related videos
+    @GetMapping("/{id}/related")
+    public ResponseEntity<List<Video>> getRelatedVideos(@PathVariable Long id) {
+        try {
+            List<Video> relatedVideos = videoService.getRelatedVideos(id);
+            return ResponseEntity.ok(relatedVideos);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+      
+    // Add this method for POST
     @PostMapping
     public Video addVideo(@RequestBody Video video) {
-        return videoRepository.save(video);
+        return videoService.saveVideo(video); // you can implement saveVideo if needed
     }
 }

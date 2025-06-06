@@ -1,6 +1,13 @@
- package com.examplemyproject.demo;
+package com.examplemyproject.demo;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-public interface VideoRepository extends CrudRepository<Video, Long> {
+import java.util.List;
+
+public interface VideoRepository extends JpaRepository<Video, Long> {
+
+    @Query("SELECT v FROM Video v JOIN v.tags t WHERE t IN :tags AND v.id <> :videoId")
+    List<Video> findRelatedVideosByTags(@Param("tags") List<String> tags, @Param("videoId") Long videoId);
 }
