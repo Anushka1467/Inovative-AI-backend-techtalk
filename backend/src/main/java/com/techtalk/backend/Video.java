@@ -1,34 +1,26 @@
 package com.techtalk.backend;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Document(collection = "videos")  // Specifies the MongoDB collection name
-@Data
+@Document(collection = "videos")  // Maps to MongoDB collection named 'videos'
+@Data                           // Generates getters, setters, toString, equals, hashCode
+@NoArgsConstructor              // Generates no-arg constructor
+@AllArgsConstructor             // Generates full-arg constructor
 public class Video {
 
     @Id
-    private String id; // MongoDB uses String id (ObjectId)
+    private String id;
 
     private String title;
     private String description;
     private String url;
     private LocalDate publishDate;
     private List<String> tags;
-
-    public Video() {
-    }
-
-    public Video(String id, String title, String description, String url, LocalDate publishDate, List<String> tags) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.url = url;
-        this.publishDate = publishDate;
-        this.tags = tags;
-    }
 }

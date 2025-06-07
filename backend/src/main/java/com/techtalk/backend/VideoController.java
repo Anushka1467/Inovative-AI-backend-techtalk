@@ -13,35 +13,38 @@ public class VideoController {
     @Autowired
     private VideoService videoService;
 
+    // Get all videos
     @GetMapping
     public List<Video> getAllVideos() {
         return videoService.getAllVideos();
     }
 
+    // Get video by ID
     @GetMapping("/{id}")
     public ResponseEntity<Video> getVideoById(@PathVariable String id) {
         try {
             Video video = videoService.getVideoById(id);
             return ResponseEntity.ok(video);
-       }     catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    //  Add this method to handle related videos
+    // Get related videos by tags (excluding the original video)
     @GetMapping("/{id}/related")
     public ResponseEntity<List<Video>> getRelatedVideos(@PathVariable String id) {
-       try {
+        try {
             List<Video> relatedVideos = videoService.getRelatedVideos(id);
             return ResponseEntity.ok(relatedVideos);
-        }   catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             return ResponseEntity.notFound().build();
         }
     }
-      
-    // Add this method for POST
+
+    // Add a new video
     @PostMapping
-    public Video addVideo(@RequestBody Video video) {
-        return videoService.saveVideo(video); // you can implement saveVideo if needed
+    public ResponseEntity<Video> addVideo(@RequestBody Video video) {
+        Video savedVideo = videoService.saveVideo(video);
+        return ResponseEntity.ok(savedVideo);
     }
 }
