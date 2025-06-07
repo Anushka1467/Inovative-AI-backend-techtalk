@@ -1,6 +1,8 @@
-package com.examplemyproject.demo;
+ package com.techtalk.backend;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +16,28 @@ public class VideoService {
         return videoRepository.findAll();
     }
 
-    public Video getVideoById(Long id) {
+    public Video getVideoById(String id) {
         return videoRepository.findById(id)
             .orElseThrow(() -> new VideoNotFoundException("Video with ID " + id + " not found"));
     }
 
-    public List<Video> getRelatedVideos(Long videoId) {
+    public List<Video> getRelatedVideos(String videoId) {
         Video video = getVideoById(videoId);
         List<String> tags = video.getTags();
         if (tags == null || tags.isEmpty()) {
             return List.of(); // Return empty list if no tags
         }
-        return videoRepository.findRelatedVideosByTags(tags, videoId);
+
+        // Fetch all videos with matching tags
+        List<Video> matchingVideos = videoRepository.findByTagsIn(tags);
+
+        // Filter out the video itself
+        return matchingVideos.stream()
+                .filter(v -> !v.getId().equals(videoId))
+                .collect(Collectors.toList());
     }
 
     public Video saveVideo(Video video) {
-          return videoRepository.save(video); // ✅ Save video to DB
+        return videoRepository.save(video); // Save video to MongoDB
     }
 }

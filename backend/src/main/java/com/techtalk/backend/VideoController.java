@@ -1,4 +1,4 @@
-package com.examplemyproject.demo;
+package com.techtalk.backend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,22 +19,22 @@ public class VideoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Video> getVideoById(@PathVariable Long id) {
+    public ResponseEntity<Video> getVideoById(@PathVariable String id) {
         try {
             Video video = videoService.getVideoById(id);
             return ResponseEntity.ok(video);
-        } catch (RuntimeException ex) {
+       }     catch (RuntimeException ex) {
             return ResponseEntity.notFound().build();
         }
     }
 
     //  Add this method to handle related videos
     @GetMapping("/{id}/related")
-    public ResponseEntity<List<Video>> getRelatedVideos(@PathVariable Long id) {
-        try {
+    public ResponseEntity<List<Video>> getRelatedVideos(@PathVariable String id) {
+       try {
             List<Video> relatedVideos = videoService.getRelatedVideos(id);
             return ResponseEntity.ok(relatedVideos);
-        } catch (RuntimeException ex) {
+        }   catch (RuntimeException ex) {
             return ResponseEntity.notFound().build();
         }
     }
