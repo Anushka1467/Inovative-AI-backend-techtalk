@@ -1,8 +1,7 @@
 # my-backend-project
 # TechTalk – Backend API with Spring Boot and MongoDB
 
-TechTalk is a Spring Boot-based backend application that provides RESTful APIs for managing video content such as tech tutorials.
-it rum on 
+TechTalk is a Spring Boot-based backend application that provides RESTful APIs for managing video content such as tech tutorials. The application can be accessed locally at: http://localhost:9090/videos.
 
 ##  Technologies Used
 - Java 17+
